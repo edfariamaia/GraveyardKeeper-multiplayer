@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="GraveyardKeeperMultiplayer/GraveyardKeeperMultiplayer.csproj" Id="a1f6198f-c06a-4ed1-a4e3-316e57165d5d">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>

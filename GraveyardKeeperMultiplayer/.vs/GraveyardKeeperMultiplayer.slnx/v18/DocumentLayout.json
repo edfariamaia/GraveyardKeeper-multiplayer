@@ -1,0 +1,391 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|c:\\users\\edfar\\source\\repos\\graveyardkeepermultiplayer\\graveyardkeepermultiplayer\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\savetransfermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\savetransfermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\onlinesavemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\onlinesavemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\patchmainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\patchmainmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\remoteplayeravatar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\remoteplayeravatar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\patchsaveslotsclosed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\patchsaveslotsclosed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\onlinelobbymenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\onlinelobbymenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\patchstartgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\patchstartgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\worldstatesync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\worldstatesync.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\worldsynchelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\worldsynchelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\patchdestroyobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\patchdestroyobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\onlinesettingsmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\onlinesettingsmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\packethelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\packethelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\packetqueue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\packetqueue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\patchdeleteslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\patchdeleteslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\patchposition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\patchposition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\patchsaveslots.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\patchsaveslots.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\patchselectslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\patchselectslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\patchzone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\patchzone.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\plugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\reliablepacketsender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\reliablepacketsender.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\graveyardkeepermultiplayer\\requestmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1F6198F-C06A-4ED1-A4E3-316E57165D5D}|GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj|solutionrelative:graveyardkeepermultiplayer\\requestmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|GraveyardKeeperMultiplayer||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NetworkManager.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\NetworkManager.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\NetworkManager.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\NetworkManager.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\NetworkManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-18T13:26:32.529Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SaveTransferManager.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\SaveTransferManager.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\SaveTransferManager.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\SaveTransferManager.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\SaveTransferManager.cs",
+              "ViewState": "AgIAANMAAAAAAAAAAAAYwIoAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-27T17:20:50.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OnlineSaveManager.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\OnlineSaveManager.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\OnlineSaveManager.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\OnlineSaveManager.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\OnlineSaveManager.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAcwGMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T19:06:13.786Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PatchMainMenu.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchMainMenu.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PatchMainMenu.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchMainMenu.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PatchMainMenu.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-18T17:05:39.173Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PatchStartGame.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchStartGame.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PatchStartGame.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchStartGame.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PatchStartGame.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-18T14:14:49.592Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "OnlineLobbyMenu.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\OnlineLobbyMenu.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\OnlineLobbyMenu.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\OnlineLobbyMenu.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\OnlineLobbyMenu.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwB0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T19:25:57.396Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PatchSaveSlotsClosed.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchSaveSlotsClosed.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PatchSaveSlotsClosed.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchSaveSlotsClosed.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PatchSaveSlotsClosed.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T19:46:58.181Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RemotePlayerAvatar.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\RemotePlayerAvatar.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\RemotePlayerAvatar.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\RemotePlayerAvatar.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\RemotePlayerAvatar.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwBcAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-19T12:09:22.304Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "OnlineSettingsMenu.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\OnlineSettingsMenu.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\OnlineSettingsMenu.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\OnlineSettingsMenu.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\OnlineSettingsMenu.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T19:26:37.012Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PacketHelper.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PacketHelper.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PacketHelper.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PacketHelper.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PacketHelper.cs",
+              "ViewState": "AgIAADoAAAAAAAAAAAAIwGMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-21T23:27:22.453Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "PatchDestroyObject.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchDestroyObject.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PatchDestroyObject.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchDestroyObject.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PatchDestroyObject.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T17:02:17.265Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "WorldSyncHelper.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\WorldSyncHelper.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\WorldSyncHelper.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\WorldSyncHelper.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\WorldSyncHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T17:02:52.899Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "WorldStateSync.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\WorldStateSync.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\WorldStateSync.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\WorldStateSync.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\WorldStateSync.cs",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAAAJgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T10:27:44.278Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "PacketQueue.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PacketQueue.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PacketQueue.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PacketQueue.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PacketQueue.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAgwGEAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T00:17:46.863Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "PatchDeleteSlot.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchDeleteSlot.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PatchDeleteSlot.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchDeleteSlot.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PatchDeleteSlot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T19:13:01.982Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "PatchPosition.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchPosition.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PatchPosition.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchPosition.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PatchPosition.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-18T02:27:26.811Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "PatchSaveSlots.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchSaveSlots.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PatchSaveSlots.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchSaveSlots.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PatchSaveSlots.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-25T19:44:21.031Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "PatchSelectSlot.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchSelectSlot.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PatchSelectSlot.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchSelectSlot.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PatchSelectSlot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-26T00:44:50.236Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "PatchZone.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchZone.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\PatchZone.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\PatchZone.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\PatchZone.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-18T00:24:53.722Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Plugin.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\Plugin.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\Plugin.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\Plugin.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\Plugin.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-17T23:38:24.051Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ReliablePacketSender.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\ReliablePacketSender.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\ReliablePacketSender.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\ReliablePacketSender.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\ReliablePacketSender.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAcwHsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T00:21:06.866Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "RequestManager.cs",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\RequestManager.cs",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\RequestManager.cs",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\RequestManager.cs",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\RequestManager.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAcwHYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-22T00:05:00.949Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "GraveyardKeeperMultiplayer",
+              "DocumentMoniker": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj",
+              "RelativeDocumentMoniker": "GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj",
+              "ToolTip": "C:\\Users\\edfar\\source\\repos\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj",
+              "RelativeToolTip": "GraveyardKeeperMultiplayer\\GraveyardKeeperMultiplayer.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-04-18T00:28:00.652Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
