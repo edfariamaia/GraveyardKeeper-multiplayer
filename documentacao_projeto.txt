@@ -1,0 +1,670 @@
+================================================================================
+  GRAVEYARD KEEPER MULTIPLAYER MOD — DOCUMENTAÇÃO DO CÓDIGO
+================================================================================
+Projeto: Mod multiplayer para Graveyard Keeper
+Framework: BepInEx 5.4.23.5 + Harmony
+Rede: Steam P2P (Steamworks.NET embutido em Assembly-CSharp-firstpass.dll)
+Motor: Unity 2020.3 / .NET Framework 4.7.2
+IDE: Visual Studio 2022
+================================================================================
+
+
+────────────────────────────────────────────────────────────────────────────────
+Plugin.cs — Ponto de entrada do mod
+────────────────────────────────────────────────────────────────────────────────
+Este é o ficheiro mais simples do projeto, mas também o mais importante:
+é aqui que o BepInEx carrega o mod.
+
+A classe Plugin herda de BaseUnityPlugin, que é o contrato exigido pelo
+BepInEx para reconhecer um ficheiro .dll como um plugin válido. O atributo
+[BepInPlugin] define três coisas: um identificador único do mod (GUID), o
+nome legível e a versão.
+
+O método Awake() é chamado automaticamente pelo Unity logo que o plugin é
+instanciado. Dentro dele, fazemos duas coisas essenciais:
+  1. Guardamos a referência ao logger do BepInEx numa variável estática
+     (Plugin.Log) para que todos os outros ficheiros do mod possam escrever
+     mensagens no console sem precisar de receber o logger por parâmetro.
+  2. Chamamos _harmony.PatchAll(), que varre o assembly inteiro à procura de
+     classes marcadas com [HarmonyPatch] e aplica todos os patches de uma vez.
+
+A instância Harmony é criada com um GUID único para que o BepInEx possa
+identificar e, se necessário, reverter os patches deste mod sem interferir
+com outros mods.
+
+
+────────────────────────────────────────────────────────────────────────────────
+PatchStartGame.cs — Inicialização dos managers após o arranque do jogo
+────────────────────────────────────────────────────────────────────────────────
+O jogo chama MainGame.GeneralInit uma única vez quando uma sessão começa.
+É o ponto mais cedo e mais seguro para inicializar o nosso código, porque
+nesta altura o motor Unity já carregou tudo o que é necessário.
+
+Este patch usa um Postfix do Harmony, o que significa que o nosso código
+corre DEPOIS do método original do jogo. Isso garante que não interferimos
+com a inicialização normal.
+
+Dentro do Postfix, criamos todos os managers do mod como GameObjects
+persistentes no Unity (com DontDestroyOnLoad). A ordem importa:
+NetworkManager tem de ser o primeiro, porque os outros managers podem
+querer enviar pacotes durante a sua criação.
+
+A lista de managers criados:
+  - NetworkManager: gestão da ligação Steam P2P
+  - RequestManager: sistema de pedidos com confirmação
+  - PacketQueue: fila ordenada de pacotes
+  - ReliablePacketSender: sistema de reenvio de pacotes críticos
+  - WorldStateSync: sincronização do estado do mundo ao conectar
+  - RemotePlayerAvatar: avatar visual do jogador remoto
+  - OnlineSettingsMenu: painel de configuração de sessão online
+  - SaveTransferManager: transferência do ficheiro de save do host para o cliente
+
+Qualquer exceção durante a criação é apanhada e registada, evitando que um
+erro num manager quebre o arranque de todos os outros.
+
+
+────────────────────────────────────────────────────────────────────────────────
+NetworkManager.cs — Núcleo da rede Steam P2P
+────────────────────────────────────────────────────────────────────────────────
+Este é o ficheiro mais complexo do projeto. Centraliza toda a comunicação
+entre os dois jogadores usando a API Steam P2P da Steamworks.NET.
+
+ARQUITETURA HOST-AUTORITATIVA:
+  O host é o servidor. O cliente envia pedidos e o host decide o resultado.
+  Toda a lógica de jogo permanece no host; o cliente só recebe o estado.
+
+ESTADO DA LIGAÇÃO:
+  - IsHost: true quando este jogador criou o lobby (é o servidor)
+  - IsConnected: true quando existe uma sessão P2P activa com outro jogador
+  - RemoteID: o CSteamID (identificador Steam) do outro jogador
+  - MyID: o nosso próprio CSteamID
+
+FLUXO DE LOBBY (HOST):
+  1. HostGame() cria um lobby "friends only" para 2 jogadores via Steam
+  2. OnLobbyCreated() guarda o ID do lobby e abre o painel de convites Steam
+  3. CRÍTICO: regista o callback P2PSSessionRequest — sem isto, o Steam
+     descarta silenciosamente todos os pacotes P2P recebidos
+  4. O ID do host é guardado nos metadados do lobby para o cliente ler
+
+FLUXO DE LOBBY (CLIENTE):
+  1. OnLobbyJoinRequested() é chamado quando o utilizador aceita um convite
+  2. OnLobbyEntered() lê o ID do host dos metadados do lobby
+  3. Envia imediatamente um pacote Connect + pedido de save ao host
+
+HEARTBEAT DE RECONEXÃO:
+  O cliente reenvia o pacote Connect a cada 2 segundos enquanto não recebe
+  confirmação do host. Quando o host confirma, o timer é definido a -999
+  para efetivamente parar o heartbeat.
+
+RECEÇÃO DE PACOTES:
+  ReceivePackets() drena a fila de pacotes Steam a cada frame. O primeiro
+  byte de cada pacote é o discriminador de tipo (PacketType), que é usado
+  para despachar o pacote para o handler correto.
+
+ENUM PacketType:
+  Define todos os tipos de pacotes do protocolo, numerados por categoria:
+  - 0–3: ligação e estado do mundo
+  - 10–11: posição e zona do jogador
+  - 20–22: objetos do mundo (mudança, destruição, criação)
+  - 30–32: inventário
+  - 40–42: crafting
+  - 50–51: dinheiro e compras
+  - 60–62: tempo e sono
+  - 70–72: dungeon
+  - 80: quests
+  - 90: configurações do lobby
+  - 100–101: combate
+  - 110–112: transferência de save
+
+
+────────────────────────────────────────────────────────────────────────────────
+PatchPosition.cs — Envio periódico da posição do jogador
+────────────────────────────────────────────────────────────────────────────────
+Patch Postfix no método Update() do PlayerComponent.
+
+PlayerComponent é o componente Unity que representa cada jogador no mundo.
+O método Update é chamado a cada frame para todos os jogadores (locais e
+remotos). Usamos um temporizador para enviar a posição 10 vezes por segundo
+(a cada 0.1 segundos), apenas para o jogador local e apenas quando existe
+uma ligação activa.
+
+A verificação is_local_player garante que não enviamos a posição do avatar
+remoto de volta para o remetente, o que criaria um ciclo.
+
+A taxa de 10 Hz (0.1 s) é um equilíbrio entre suavidade de movimento e
+largura de banda consumida. Com posições enviadas a esta taxa, o avatar
+remoto move-se de forma razoavelmente fluida sem sobrecarregar o canal P2P.
+
+
+────────────────────────────────────────────────────────────────────────────────
+PatchUpdateZone.cs — Deteção e envio de mudanças de zona
+────────────────────────────────────────────────────────────────────────────────
+Patch Postfix no método UpdateZone() do PlayerComponent.
+
+O jogo divide o mundo em zonas (overworld, graveyard, dungeon, church, etc.)
+e chama UpdateZone quando o jogador muda de zona. Guardamos a última zona
+conhecida e só enviamos um pacote Zone quando a zona realmente muda, evitando
+tráfego redundante.
+
+Este mecanismo será expandido no futuro para sincronizar o carregamento de
+cenas — quando um jogador muda de zona, o outro deve carregar a mesma zona.
+
+
+────────────────────────────────────────────────────────────────────────────────
+PatchDestroyObject.cs — Sincronização de destruição de objetos do mundo
+────────────────────────────────────────────────────────────────────────────────
+Patch Prefix no método DestroyMe() do WorldGameObject.
+
+DestroyMe é o método universal do jogo para remover qualquer objeto do mundo:
+árvores, pedras, túmulos, etc. Quando o jogador local destrói um objeto,
+interceptamos a chamada e enviamos um pacote WorldObjectDestroyed com o
+unique_id do objeto para que o jogador remoto o possa destruir localmente.
+
+O campo estático IsRemoteDestruction é fundamental:
+  - Quando o CLIENTE recebe um pacote WorldObjectDestroyed, chama DestroyMe
+    localmente com IsRemoteDestruction = true.
+  - Este patch verifica o flag e, se estiver activo, NÃO envia o pacote de
+    volta, evitando um ciclo infinito (eco de destruição).
+
+Só sincronizamos objetos com unique_id > 0 porque objetos dinâmicos/
+scripted têm IDs inválidos (zero ou negativos) e não podem ser encontrados
+pelo receiver.
+
+
+────────────────────────────────────────────────────────────────────────────────
+PatchMainMenu.cs — Injeção de botões no menu principal
+────────────────────────────────────────────────────────────────────────────────
+Patch Postfix no método Open() do MainMenuGUI.
+
+Este patch é chamado toda a vez que o menu principal é aberto (arranque do
+jogo, retorno de uma sessão, etc.). Faz duas coisas principais:
+
+1. RESET DO ESTADO DE LIGAÇÃO:
+   Limpa o ficheiro temporário mp_host.dat (deixado quando o cliente
+   desconecta), e repõe IsConnected = false se não houver uma transferência
+   de save em curso. O lobby é resetado só se não existir sessão activa.
+
+2. INJEÇÃO DOS BOTÕES:
+   Clona o botão "Exit" do menu (para herdar o estilo visual) e reconfigura-o
+   como "Invite Friend" e "Playing Online". O clone remove o componente
+   LocalizedLabel (que forçaria tradução) e define o texto directamente no
+   UILabel. Os callbacks on_pressed são redefinidos para as nossas funções.
+
+   A verificação no início (se os botões já existem) evita duplicar os botões
+   quando o menu é aberto mais do que uma vez na mesma sessão.
+
+   "Invite Friend": abre o painel de convites Steam (cria lobby se necessário)
+   "Playing Online": abre o browser de saves online
+
+
+────────────────────────────────────────────────────────────────────────────────
+PatchSaveSlots.cs — Filtro da lista de saves para o modo online
+────────────────────────────────────────────────────────────────────────────────
+Patch Prefix no método OnSlotsLoaded() do SaveSlotsMenuGUI.
+
+OnSlotsLoaded é chamado pelo jogo após ler todos os ficheiros de save do
+disco e antes de renderizar a lista. Quando o jogador entrou pelo botão
+"Playing Online" (IsOnlineFlow == true), interceptamos a lista completa de
+saves, filtramos para incluir apenas os que têm um ficheiro .gkmp associado,
+e chamamos RedrawSlots via reflection com a lista filtrada.
+
+Retornar false no Prefix suprime o método original, evitando que a lista
+não filtrada seja desenhada a seguir. Se não estamos em online flow,
+retornamos true para deixar o comportamento original intacto.
+
+RedrawSlots é um método privado, por isso é necessário acedê-lo via
+reflection com BindingFlags.NonPublic.
+
+
+────────────────────────────────────────────────────────────────────────────────
+PatchSelectSlots.cs — Intercepção de "New Save" no modo online
+────────────────────────────────────────────────────────────────────────────────
+Patch Prefix no método OnSelectSlotPressed() do SaveSlotsMenuGUI.
+
+Este patch só tem efeito quando IsOnlineFlow == true. Quando o utilizador
+clica num save existente (slot != null), deixamos o jogo carregar normalmente.
+Quando clica em "New Save" (slot == null), em vez de criar um save em branco,
+abrimos o OnlineSettingsMenu para o host configurar as opções da sessão.
+
+O padrão slot == null para detetar "New Save" vem do funcionamento interno
+do SaveSlotsMenuGUI original.
+
+
+────────────────────────────────────────────────────────────────────────────────
+PatchDeleteSlot.cs — Limpeza do ficheiro .gkmp ao apagar um save
+────────────────────────────────────────────────────────────────────────────────
+Patch Prefix no método DeleteSlot() do PlatformSpecific.
+
+Quando o jogador apaga um save pelo menu do jogo, este patch é chamado
+ANTES da eliminação real. Chamamos OnlineSaveManager.DeleteSettings() para
+apagar o ficheiro .gkmp correspondente. Se o ficheiro não existir (save local
+normal), a função não faz nada.
+
+Isto garante que a pasta de saves não fique cheia de ficheiros .gkmp órfãos
+quando os saves são apagados.
+
+
+────────────────────────────────────────────────────────────────────────────────
+RemotePlayerAvatar.cs — Avatar visual do jogador remoto
+────────────────────────────────────────────────────────────────────────────────
+Gere a representação visual do outro jogador no nosso mundo local.
+
+ESTRATÉGIA:
+  Clonamos o GameObject do jogador local (que já tem todos os sprites,
+  animações e filhos) e removemos todos os componentes que fariam o clone
+  comportar-se como um actor real do jogo. O que sobra é um "boneco"
+  puramente visual que movemos diretamente pelo transform.position quando
+  recebemos um pacote de posição.
+
+REMOÇÃO DE COMPONENTES:
+  A ordem de remoção é importante. SimpleSmoothModifierXY deve ser removido
+  ANTES do Seeker porque tem uma dependência dele. Os colliders são removidos
+  pelo nome do tipo (string) para evitar referência ao assembly Physics2D.
+
+  Componentes removidos:
+    - SimpleSmoothModifierXY, Seeker: pathfinding A*
+    - PlayerComponent: lógica e input do jogador local
+    - ChunkedGameObject: trigger de carregamento de chunks do mapa
+    - WorldGameObject: registo de objetos no WorldMap
+    - RoundAndSortComponent: ordenação de sprites
+    - CustomNetworkAnimatorSync: sincronizador de animações não nosso
+    - BaseCharacterIdle, CurvedAttack, SmartAnimationController: lógica de combate
+    - AnimationEvent: emissão de eventos de animação
+    - ObjectDynamicShadow/Child: sombras dinâmicas
+    - CircleCollider2D, BoxCollider2D, Rigidbody2D: física
+
+CICLO DE VIDA:
+  - Create(): chamado em PatchStartGame, cria o container MonoBehaviour
+  - InitAvatar(): chamado periodicamente até game_started == true e o
+    GameObject do jogador estar disponível
+  - UpdatePosition(): chamado cada vez que um pacote Position chega
+  - DestroyAvatar(): chamado quando o jogador regressa ao menu principal
+
+
+────────────────────────────────────────────────────────────────────────────────
+PacketHelper.cs — Serialização/deserialização de pacotes
+────────────────────────────────────────────────────────────────────────────────
+Classe estática com pares de métodos Serialize/Deserialize para cada tipo
+de pacote. Centraliza o formato binário de cada pacote para garantir que o
+emissor e o receptor concordam sempre na estrutura.
+
+Usa BinaryWriter/BinaryReader sobre um MemoryStream, que é o padrão .NET
+para I/O binário portável.
+
+O primeiro byte de cada pacote é sempre o discriminador de tipo (PacketType),
+de forma a que o receptor saiba como interpretar os bytes seguintes.
+
+PACOTES IMPLEMENTADOS:
+  - Position (10): type + 3 floats (x, y, z) = 13 bytes
+  - Zone (11): type + string com prefixo de comprimento
+  - WorldObjectChanged (20): type + 2 strings (objectId + newState)
+  - TimeSync (60): type + 1 float (tempo de jogo)
+
+
+────────────────────────────────────────────────────────────────────────────────
+QueuedPacket.cs — Estrutura de dados de um pacote na fila
+────────────────────────────────────────────────────────────────────────────────
+Classe de dados simples (POCO) que representa um pacote armazenado no
+PacketQueue. Contém o número de sequência (para ordenação), o tipo, os bytes
+raw e o timestamp de quando foi enfileirado.
+
+Usada tanto na fila de saída como na fila de entrada do PacketQueue.
+
+
+────────────────────────────────────────────────────────────────────────────────
+PacketQueue.cs — Fila ordenada de pacotes
+────────────────────────────────────────────────────────────────────────────────
+Gere a entrega ordenada de pacotes em ambas as direcções.
+
+FILA DE SAÍDA:
+  Os pacotes são estampados com um número de sequência crescente e enviados
+  no método Update(), com um máximo de 10 pacotes por frame. Isto evita
+  saturar o canal Steam com uma explosão de pacotes num único frame.
+
+FILA DE ENTRADA:
+  Usa um SortedDictionary<uint, QueuedPacket> para armazenar pacotes recebidos
+  por número de sequência. DequeueIncoming() só devolve o próximo pacote quando
+  o número de sequência esperado está disponível, garantindo entrega em ordem
+  mesmo que os pacotes cheguem fora de ordem.
+
+RESET:
+  Reset() limpa ambas as filas e repõe os contadores de sequência. Deve ser
+  chamado quando a ligação é terminada.
+
+
+────────────────────────────────────────────────────────────────────────────────
+PendingRequest.cs — Estrutura de um pedido pendente
+────────────────────────────────────────────────────────────────────────────────
+POCO que representa um pedido enviado mas ainda não confirmado. O
+RequestManager mantém um dicionário destes objetos keyed pelo ID.
+
+Campos:
+  - Id: número único atribuído pelo RequestManager
+  - Type: tipo do pacote (para logging e debug)
+  - Data: bytes raw do pacote (guardados para reenvio)
+  - SentTime: Time.time do último envio (para calcular timeout)
+  - RetryCount: quantas vezes este pedido foi reenviado até agora
+
+
+────────────────────────────────────────────────────────────────────────────────
+RequestManager.cs — Sistema de pedidos com confirmação
+────────────────────────────────────────────────────────────────────────────────
+Camada de aplicação sobre o envio raw de pacotes para ações que precisam
+de confirmação do lado remoto.
+
+FUNCIONAMENTO:
+  1. Chamamos SendRequest(type, data) em vez de NetworkManager.SendRaw()
+  2. O manager atribui um ID único, injeta-o no pacote, regista um
+     PendingRequest e envia o pacote
+  3. A cada frame (Update), verifica todos os pedidos pendentes:
+     - Se passaram 2 segundos sem confirmação, reenvia o pacote
+     - Após 5 tentativas sem resposta, abandona e regista um aviso
+  4. Quando a confirmação chega, chamamos ConfirmRequest(id) ou
+     RejectRequest(id, reason) para remover a entrada
+
+CASOS DE USO FUTUROS:
+  - Pedir ao host para confirmar uma mudança de inventário
+  - Pedir confirmação de que uma compra a vendedor foi processada
+  - Qualquer ação onde uma resposta do host é obrigatória
+
+
+────────────────────────────────────────────────────────────────────────────────
+ReliablePacketSender.cs — Camada de entrega fiável ao nível da aplicação
+────────────────────────────────────────────────────────────────────────────────
+Camada de acknowledgement explícito sobre o envio raw.
+
+NOTA: O Steam P2P com k_EP2PSendReliable já garante entrega. Esta classe
+existe para pacotes tão críticos que queremos confirmação explícita ao nível
+da aplicação, independentemente das garantias do Steam (por exemplo,
+mudanças de estado do mundo que não podem ser perdidas em reconexões).
+
+FUNCIONAMENTO:
+  1. SendReliable(data): estampa o pacote com um número de sequência, regista-o
+     como não-acknowledged e envia-o
+  2. O receptor processa o pacote e chama SendAcknowledgement(seqNum) de volta
+  3. O emissor recebe o ack e chama Acknowledge(seqNum) para parar os reenvios
+  4. Se nenhum ack chegar em 1.5 s, o pacote é reenviado (máx. 5 tentativas)
+
+A classe TrackedPacket é interna e mantém os metadados de cada pacote
+não-acknowledged: sequência, bytes, timestamp do último envio e nº tentativas.
+
+
+────────────────────────────────────────────────────────────────────────────────
+WorldStateSync.cs — Sincronização inicial do estado do mundo
+────────────────────────────────────────────────────────────────────────────────
+Encarrega-se de sincronizar o estado do mundo quando um cliente se conecta.
+
+PROBLEMA QUE RESOLVE:
+  Quando o cliente carrega o save do host (via SaveTransferManager), o save
+  contém o estado do mapa no momento em que foi gravado. Mas entre essa
+  gravação e o momento da conexão, o host pode ter destruído objetos
+  (cortado árvores, desenterrado pedras, etc.). Esses objetos precisam de
+  ser destruídos também no lado do cliente.
+
+FLUXO:
+  Host: SendWorldState() é chamado logo após o Connect inicial.
+    - Itera WorldMap._objs (via reflection, pois o campo é privado)
+    - Coleta os unique_ids de todos os objetos marcados como removidos
+    - Serializa para um pacote WorldStateResponse com: game_time, day,
+      posição do host, lista de unique_ids destruídos
+    - Envia o pacote ao cliente
+
+  Cliente: ReceiveWorldState() processa o pacote
+    - Para cada unique_id na lista, encontra o objeto e chama DestroyMe()
+    - Usa IsRemoteDestruction = true para não ecoar as destruições de volta
+    - Define WorldStateReceived = true
+
+ACESSO VIA REFLECTION:
+  WorldMap._objs é um campo privado estático. Usamos reflection para acedê-lo,
+  cacheando a FieldInfo para não repetir a pesquisa a cada frame.
+
+
+────────────────────────────────────────────────────────────────────────────────
+WorldSyncHelper.cs — Serialização de pacotes de objetos do mundo
+────────────────────────────────────────────────────────────────────────────────
+Classe estática de baixo nível com os métodos de serialização/deserialização
+especificamente para o pacote WorldObjectDestroyed (tipo 21).
+
+SendObjectDestroyed(uniqueId): escreve o byte de tipo (21) seguido do
+  unique_id (long, 8 bytes) e envia via NetworkManager.SendRaw().
+
+ReadObjectDestroyed(data): salta o byte[0] (discriminador) e lê os 8 bytes
+  seguintes como um long (unique_id).
+
+O formato simples (type + unique_id = 9 bytes) é propositado — é o mínimo
+necessário para o receiver encontrar e destruir o objeto correto.
+
+
+────────────────────────────────────────────────────────────────────────────────
+OnlineLobbyMenu.cs — Fluxo de navegação "Playing Online"
+────────────────────────────────────────────────────────────────────────────────
+Classe estática que gere o flag IsOnlineFlow e inicia o browser de saves
+online.
+
+Open() define IsOnlineFlow = true e lê os saves disponíveis de forma
+  assíncrona via PlatformSpecific.ReadSaveSlots. O callback apenas regista
+  quantos saves online existem (para debug). A filtragem real é feita pelo
+  PatchSaveSlots quando o menu de saves é desenhado.
+
+Close() repõe IsOnlineFlow = false. Deve ser chamado quando o utilizador
+  sai do browser de saves sem carregar um jogo.
+
+IsOnlineFlow é o ponto central de coordenação entre vários patches:
+  - PatchSaveSlots: filtra a lista se true
+  - PatchSelectSlot: intercepta "New Save" se true
+  O flag evita que esses patches alterem o comportamento do modo local.
+
+
+────────────────────────────────────────────────────────────────────────────────
+OnlineSaveSettings.cs — Configurações da sessão online
+────────────────────────────────────────────────────────────────────────────────
+POCO simples que representa as opções configuráveis de uma sessão online.
+É serializado para JSON e guardado num ficheiro .gkmp ao lado do save.
+
+CAMPOS:
+  isOnline (bool):
+    Sempre true para saves online. Serve como "assinatura" do ficheiro .gkmp
+    para distinção rápida de saves locais.
+
+  sharedMoney (bool):
+    false = cada jogador tem a sua própria carteira de moedas
+    true  = ambos os jogadores partilham um pool comum de moedas
+
+  experienceMode (int):
+    0 = Individual (padrão): XP e pontos de skill independentes por jogador
+    1 = XP partilhada: ambos ganham o mesmo XP de qualquer fonte
+    2 = XP + Skills partilhados: pool de XP e pontos de skill em comum
+
+  friendlyFire (bool):
+    false = jogadores não se podem magoar mutuamente (padrão)
+    true  = dano entre jogadores está ativo
+
+
+────────────────────────────────────────────────────────────────────────────────
+OnlineSaveManager.cs — Leitura, escrita e eliminação de ficheiros .gkmp
+────────────────────────────────────────────────────────────────────────────────
+Centraliza todas as operações de I/O sobre os ficheiros de configuração .gkmp.
+
+ESTRUTURA DO FICHEIRO .gkmp:
+  JSON minimalista, escrito à mão para evitar a dependência do Newtonsoft.Json:
+  {"isOnline":true,"sharedMoney":false,"experienceMode":0,"friendlyFire":false}
+
+  O ficheiro tem o mesmo nome do save mas com extensão .gkmp e fica na mesma
+  pasta (retornada por PlatformSpecific.GetSaveFolder()).
+
+FUNÇÕES PRINCIPAIS:
+
+  IsOnlineSave(slot): verifica se o ficheiro .gkmp existe para o slot dado.
+    É a forma canónica de saber se um save é online ou local.
+
+  SaveSettings(slot, settings): serializa o objeto OnlineSaveSettings para
+    JSON e escreve o ficheiro. Chamado após a criação de um novo save online.
+
+  LoadSettings(slot): lê e parse o JSON com string.Contains simples.
+    Retorna null se o ficheiro não existir.
+
+  DeleteSettings(slot): apaga o ficheiro .gkmp. Chamado por PatchDeleteSlot
+    antes de o jogo apagar o .dat correspondente.
+
+  ApplySettings(): regista (por agora) as configurações actuais. Será
+    expandido em fases futuras para aplicar as regras no jogo em curso.
+
+
+────────────────────────────────────────────────────────────────────────────────
+OnlineSettingsMenu.cs — Painel IMGUI de configuração da sessão
+────────────────────────────────────────────────────────────────────────────────
+Painel de sobreposição que o host vê antes de criar um novo save online,
+implementado com o sistema IMGUI do Unity (immediate mode GUI).
+
+NECESSITA das DLLs:
+  - UnityEngine.IMGUIModule.dll (GUIStyle, GUI, GUILayout, etc.)
+  - UnityEngine.TextRenderingModule.dll (TextAnchor, FontStyle)
+
+FLUXO DE ABERTURA:
+  1. PatchSelectSlot deteta que "New Save" foi clicado em online flow
+  2. Chama OnlineSettingsMenu.Open(mainMenu)
+  3. O painel fica visível (_visible = true)
+  4. Unity chama OnGUI() a cada frame enquanto o painel está visível
+
+RENDERING (OnGUI):
+  - Desenha um overlay semi-transparente preto para escurecer o fundo
+  - Centra um painel 420×290 px no ecrã
+  - Dentro do painel: título, dois toggles (dinheiro, friendly fire),
+    grupo de rádio de 3 opções para XP, botões Confirm e Cancel
+
+ESTILOS (BuildStyles):
+  Os GUIStyles são criados uma vez na primeira chamada de OnGUI (não no
+  Start/Awake porque a GUI skin pode não estar pronta nessa altura). As
+  texturas de fundo são 1×1 pixels coloridos criados por MakeTex().
+
+CONFIRMAÇÃO (ConfirmSettings):
+  Usa o mesmo padrão de callbacks que o jogo usa internamente:
+    LoadingGUI.Show() → GameSave.CreateNewSave() → PlatformSpecific.SaveGame()
+  No callback final do SaveGame, escrevemos o .gkmp e chamamos StartPlayingGame.
+
+
+────────────────────────────────────────────────────────────────────────────────
+SaveTransferManager.cs — Transferência do save do host para o cliente
+────────────────────────────────────────────────────────────────────────────────
+Este é o ficheiro mais central da Fase 4. Implementa a cópia completa do
+estado do mundo do host para o cliente no momento da ligação.
+
+PORQUÊ É NECESSÁRIO:
+  O cliente precisa de começar com o mesmo progresso do mundo que o host:
+  quests completadas, objetos destruídos, layout do mapa, etc. A única forma
+  de garantir isso é transferir o save completo do host para o cliente.
+
+LIMITAÇÃO DO STEAM P2P:
+  Os pacotes Steam P2P têm um tamanho máximo de ~1 MB. Um save do Graveyard
+  Keeper pode ter vários MB. Por isso, o save é dividido em chunks de 64 KB
+  (ChunkSize = 65536 bytes) e enviado em múltiplos pacotes SaveChunk.
+
+FLUXO COMPLETO:
+  1. Cliente conecta e envia SaveRequest
+  2. Host recebe SaveRequest via NetworkManager → chama OnSaveRequested()
+  3. Se o jogo ainda não started, defere para o próximo Update frame
+  4. SendSave():
+     a. Serializa o save: MainGame.me.save.ToBinary()
+     b. Calcula número de chunks: ceil(tamanho / 65536)
+     c. Envia N pacotes SaveChunk com payload: [totalChunks, totalBytes,
+        chunkIndex, chunkLen, chunkData]
+     d. Envia 1 pacote SaveComplete com: [totalChunks, totalBytes]
+  5. Cliente recebe chunks em OnChunkReceived():
+     a. No primeiro chunk, aloca a lista de buffers
+     b. Armazena cada chunk no índice correto
+  6. Cliente recebe SaveComplete em OnTransferComplete():
+     a. Verifica que todos os slots estão preenchidos
+     b. Chama ReassembleChunks() para concatenar tudo
+     c. Chama ApplySave() com o byte array completo
+  7. ApplySave():
+     a. Desserializa o save: GameSave.FromBinary()
+     b. Escreve mp_host.dat em disco
+     c. Cria um SaveSlotData via reflection (campo filename_no_extension privado)
+     d. Injeta o save em MainGame.me.save e MainGame.me.save_slot
+     e. Chama RestoreSceneToInitialState() para limpar a cena
+     f. Usa LoadingGUI.Show() + StartPlayingGame() para entrar no jogo
+
+DETALHE TÉCNICO (RestoreSceneToInitialState):
+  Esta chamada é essencial. Antes de aplicar o save, a cena está no estado
+  inicial (como se fosse um jogo novo). RestoreSceneToInitialState repõe
+  todos os objetos ao estado padrão, e depois StartPlayingGame() aplica o
+  save.map por cima, resultando no estado correto do mundo do host.
+
+DEBUG:
+  SendSave() itera os objetos do mundo à procura de "talking_skull" antes
+  de serializar, para verificar se o NPC está presente no save. Este é um
+  ponto de investigação em aberto (o NPC não aparece no cliente).
+
+
+================================================================================
+  FLUXO DE CONEXÃO COMPLETO
+================================================================================
+
+  HOST                              CLIENTE
+  ────                              ───────
+  Clica "Invite Friend"
+  CreateLobby() →
+  OnLobbyCreated()
+  SetLobbyData("host", myID)
+  ActivateInviteDialog()
+  Regista P2PSSessionRequest cb
+                                    Aceita convite Steam
+                                    OnLobbyJoinRequested()
+                                    JoinLobby() →
+                                    OnLobbyEntered()
+                                    Lê RemoteID dos metadados
+                                    IsPendingTransfer = true
+                                    Envia Connect + SaveRequest
+  Recebe Connect
+  IsConnected = true
+  RemoteID = clienteID
+  Envia Connect (confirmação)
+  WorldStateSync.SendWorldState()
+  Recebe SaveRequest
+  _pendingSendRequest = true
+  (espera game_started...)
+  game_started == true →
+  SendSave() [N chunks + Complete]
+                                    Recebe Connect (confirmação)
+                                    _reconnectTimer = -999
+                                    Recebe N chunks →
+                                    OnChunkReceived() ×N
+                                    Recebe SaveComplete →
+                                    OnTransferComplete()
+                                    ReassembleChunks()
+                                    ApplySave()
+                                    RestoreSceneToInitialState()
+                                    StartPlayingGame()
+                                    [jogo carregado]
+  Tenta InitAvatar() a cada frame   Tenta InitAvatar() a cada frame
+  até game_started == true          até game_started == true
+
+
+================================================================================
+  ESTADO ACTUAL DO PROJETO (Maio 2026)
+================================================================================
+
+  Fase 1 — Foundation: COMPLETA
+    Ligação Steam P2P, lobby, convites, posição, zona, avatar básico
+
+  Fase 2 — Infraestrutura de Rede: COMPLETA
+    PacketType enum, RequestManager, PacketQueue, ReliablePacketSender,
+    WorldStateSync
+
+  Fase 3 — Configurações do Host: COMPLETA
+    Botão "Playing Online", saves online com .gkmp, IMGUI de configurações,
+    fluxo de criação de saves online, filtragem de saves
+
+  Fase 4 — Sincronização do Mundo: EM CURSO
+    FEITO: sistema de transferência de save (SaveTransferManager)
+    FEITO: sincronização de destruição de objetos (WorldStateSync)
+    PENDENTE: talking_skull NPC não aparece no cliente
+    PENDENTE: inventário do cliente (armazenar no save do host)
+    PENDENTE: criação de objetos no mundo (construções, itens colocados)
+    PENDENTE: estado de objetos (portas, cofres, campos)
+
+  Fases 5–10: PENDENTES
+    Crafting, inventário, economia, NPCs, quests, dungeon, tempo, polish
+
+
+================================================================================
